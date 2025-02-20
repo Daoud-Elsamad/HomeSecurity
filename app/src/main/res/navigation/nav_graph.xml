@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.homesecurity.ui.fragments.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.homesecurity.ui.fragments.DashboardFragment"
+        android:label="Dashboard" />
+
+    <fragment
+        android:id="@+id/alertsFragment"
+        android:name="com.example.homesecurity.ui.fragments.AlertsFragment"
+        android:label="Alerts" />
+
+    <fragment
+        android:id="@+id/nfcRegistrationFragment"
+        android:name="com.example.homesecurity.ui.fragments.NfcRegistrationFragment"
+        android:label="NFC Registration" />
+
+    <fragment
+        android:id="@+id/accessLogsFragment"
+        android:name="com.example.homesecurity.ui.fragments.AccessLogsFragment"
+        android:label="Access Logs" />
+
+    <fragment
+        android:id="@+id/floorPlanFragment"
+        android:name="com.example.homesecurity.ui.fragments.FloorPlanFragment"
+        android:label="Floor Plan"
+        tools:layout="@layout/fragment_floor_plan" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.homesecurity.ui.fragments.SettingsFragment"
+        android:label="Settings">
+    </fragment>
+
+</navigation> 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashboardFragment"
+            android:icon="@drawable/ic_dashboard"
+            android:title="Dashboard" />
+        
+        <item
+            android:id="@+id/alertsFragment"
+            android:icon="@drawable/ic_alert"
+            android:title="Alerts" />
+        
+        <item
+            android:id="@+id/nfcRegistrationFragment"
+            android:icon="@drawable/ic_nfc"
+            android:title="NFC Cards" />
+        
+        <item
+            android:id="@+id/accessLogsFragment"
+            android:icon="@drawable/ic_history"
+            android:title="Access Logs" />
+        
+        <item
+            android:id="@+id/floorPlanFragment"
+            android:icon="@drawable/ic_floor_plan"
+            android:title="Floor Plan"/>
+        
+        <item
+            android:id="@+id/settingsFragment"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+    </group>
+</menu> 

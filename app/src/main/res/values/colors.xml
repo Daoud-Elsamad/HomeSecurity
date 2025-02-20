@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Theme Colors -->
+    <color name="background">#F0F2F5</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="primary">#4361EE</color>
+    <color name="secondary">#2DD4BF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    
+    <!-- Status Colors -->
+    <color name="system_armed">#00C853</color>
+    <color name="system_disarmed">#FF3D00</color>
+    
+    <!-- Card Colors -->
+    <color name="card_stroke">#E5E9EF</color>
+    <color name="card_shadow">#1A000000</color>
+    <color name="card_background">@color/white</color>
+    
+    <!-- Navigation Colors -->
+    <color name="nav_background_start">#1A237E</color>
+    <color name="nav_background_end">#283593</color>
+    <color name="nav_text">@color/white</color>
+    <color name="nav_text_secondary">#B3FFFFFF</color>
+    <color name="nav_selected_background">#33FFFFFF</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">@color/black</color>
+    <color name="text_secondary">#666666</color>
+    
+    <!-- Status Colors -->
+    <color name="status_normal">#34D399</color>
+    <color name="status_warning">#FCD34D</color>
+    <color name="status_alert">#F87171</color>
+    <color name="status_disconnected">#94A3B8</color>
+    
+    <!-- Sensor Colors -->
+    <color name="sensor_gas">#FCA5A5</color>
+    <color name="sensor_door">#93C5FD</color>
+    <color name="sensor_vibration">#86EFAC</color>
+    <color name="sensor_ultrasonic">#C4B5FD</color>
+    
+    <!-- Switch Colors -->
+    <color name="switch_thumb">@color/primary</color>
+    <color name="switch_track">#80808080</color>
+    
+    <!-- Floor Plan Colors -->
+    <color name="floor_plan_wall">#424242</color>
+
+    <!-- Gradient Colors -->
+    <color name="card_gradient_start">@color/white</color>
+    <color name="card_gradient_end">#F1F5F9</color>
+</resources>

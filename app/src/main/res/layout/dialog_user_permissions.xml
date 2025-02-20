@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_background"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="User Permissions"
+        android:textSize="20sp"
+        android:textColor="@color/text_primary"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="24dp">
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/viewLogsPermission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Activity Logs"
+            android:textColor="@color/text_primary"
+            android:paddingVertical="12dp"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/manageSensorsPermission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Sensors"
+            android:textColor="@color/text_primary"
+            android:paddingVertical="12dp"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/manageUsersPermission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Users"
+            android:textColor="@color/text_primary"
+            android:paddingVertical="12dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CANCEL"
+            android:textColor="@color/primary"
+            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAVE"
+            android:layout_marginStart="16dp"
+            style="@style/Widget.MaterialComponents.Button"/>
+    </LinearLayout>
+</LinearLayout> 

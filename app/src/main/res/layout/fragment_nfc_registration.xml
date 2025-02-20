@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@color/primary">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_nfc"
+            app:tint="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NFC Card Registration"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register new NFC cards and manage access levels"
+            android:textColor="#E6FFFFFF"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+    <!-- Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="User ID"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userIdInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Access Level"
+                android:textSize="16sp"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"/>
+
+            <RadioGroup
+                android:id="@+id/accessLevelGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Admin Option -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/adminCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#E0E0E0"
+                    app:cardCornerRadius="12dp">
+
+                    <RadioButton
+                        android:id="@+id/radioAdmin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:drawableStart="@drawable/ic_admin"
+                        android:drawablePadding="16dp"
+                        android:text="Admin"
+                        android:textSize="16sp"
+                        android:button="@null"
+                        android:drawableEnd="@android:drawable/btn_radio"
+                        android:background="?android:attr/selectableItemBackground"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Resident Option -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/residentCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#E0E0E0"
+                    app:cardCornerRadius="12dp">
+
+                    <RadioButton
+                        android:id="@+id/radioResident"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:drawableStart="@drawable/ic_resident"
+                        android:drawablePadding="16dp"
+                        android:text="Resident"
+                        android:textSize="16sp"
+                        android:button="@null"
+                        android:drawableEnd="@android:drawable/btn_radio"
+                        android:background="?android:attr/selectableItemBackground"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Guest Option -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/guestCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#E0E0E0"
+                    app:cardCornerRadius="12dp">
+
+                    <RadioButton
+                        android:id="@+id/radioGuest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:drawableStart="@drawable/ic_guest"
+                        android:drawablePadding="16dp"
+                        android:text="Guest"
+                        android:textSize="16sp"
+                        android:button="@null"
+                        android:drawableEnd="@android:drawable/btn_radio"
+                        android:background="?android:attr/selectableItemBackground"/>
+                </com.google.android.material.card.MaterialCardView>
+            </RadioGroup>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/clearSelectionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Clear Selection"
+                android:textSize="14sp"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                app:icon="@drawable/ic_clear"
+                app:iconTint="@color/primary"
+                android:textColor="@color/primary"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/registerButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Register NFC Card"
+                android:textSize="16sp"
+                android:padding="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registered Cards"
+                android:textSize="16sp"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cardsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout> 
