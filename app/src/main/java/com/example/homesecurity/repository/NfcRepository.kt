@@ -53,13 +53,18 @@ class MockNfcRepository @Inject constructor() : NfcRepository {
 
     override suspend fun deactivateCard(cardId: String) {
         registeredCards.update { cards ->
-            cards.map { 
-                if (it.id == cardId) it.copy(isActive = false) else it 
+            cards.map { card ->
+                if (card.id == cardId) card.copy(isActive = false) else card
             }
         }
     }
 
     override suspend fun getCurrentUser(): NfcCard? {
-        return registeredCards.value.find { it.accessLevel == AccessLevel.ADMIN }
+        // For testing, return a mock admin user
+        return NfcCard(
+            id = "admin_card",
+            userId = "admin",
+            accessLevel = AccessLevel.ADMIN
+        )
     }
 } 

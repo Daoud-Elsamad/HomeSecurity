@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import android.nfc.Tag
 
 @AndroidEntryPoint
 class NfcScanFragment : Fragment() {
@@ -82,5 +83,9 @@ class NfcScanFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun handleNfcTag(tag: Tag) {
+        viewModel.handleNfcTag(tag)
     }
 } 

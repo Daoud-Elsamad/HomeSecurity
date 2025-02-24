@@ -1,5 +1,10 @@
 package com.example.homesecurity
 
+import android.app.PendingIntent
+import android.content.Intent
+import android.content.IntentFilter
+import android.nfc.NfcAdapter
+import android.nfc.Tag
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -11,12 +16,16 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.homesecurity.databinding.ActivityMainBinding
+import com.example.homesecurity.ui.fragments.NfcRegistrationFragment
+import com.example.homesecurity.ui.fragments.NfcScanFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
+    private var nfcAdapter: NfcAdapter? = null
+    private var pendingIntent: PendingIntent? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_HomeSecurity_Splash)
@@ -54,6 +63,49 @@ class MainActivity : AppCompatActivity() {
             } else {
                 binding.toolbar.visibility = View.VISIBLE
                 binding.toolbar.title = destination.label
+            }
+        }
+
+        // Initialize NFC if available
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+        nfcAdapter?.let {
+            pendingIntent = PendingIntent.getActivity(
+                this, 0,
+                Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+            )
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        nfcAdapter?.let { adapter ->
+            pendingIntent?.let { pending ->
+                adapter.enableForegroundDispatch(this, pending, null, null)
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        nfcAdapter?.disableForegroundDispatch(this)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if (NfcAdapter.ACTION_TAG_DISCOVERED == intent.action) {
+            @Suppress("DEPRECATION")
+            val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+            tag?.let {
+                // Find current fragment and handle NFC tag
+                val navHostFragment = supportFragmentManager
+                    .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+                val currentFragment = navHostFragment.childFragmentManager
+                    .fragments.firstOrNull()
+                
+                if (currentFragment is NfcRegistrationFragment) {
+                    currentFragment.handleNfcTag(it)
+                }
             }
         }
     }
