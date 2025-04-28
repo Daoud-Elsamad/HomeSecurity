@@ -13,8 +13,10 @@ data class Alert(
 
 enum class AlertType {
     GAS_LEAK,
-    DOOR_UNAUTHORIZED,
-    DOOR_LEFT_OPEN,
+    PROXIMITY,
     VIBRATION_DETECTED,
-    NFC_UNAUTHORIZED
+    NFC_UNAUTHORIZED,
+    FIRE,
+    DOOR_UNAUTHORIZED,
+    DOOR_LEFT_OPEN
 } 

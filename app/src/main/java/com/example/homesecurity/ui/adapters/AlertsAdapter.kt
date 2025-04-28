@@ -47,6 +47,8 @@ class AlertsAdapter : ListAdapter<Alert, AlertsAdapter.ViewHolder>(AlertDiffCall
             AlertType.DOOR_LEFT_OPEN -> "Door Alert"
             AlertType.VIBRATION_DETECTED -> "Vibration Alert"
             AlertType.NFC_UNAUTHORIZED -> "Unauthorized NFC Access"
+            AlertType.PROXIMITY -> "Proximity Alert"
+            AlertType.FIRE -> "Fire Alert"
         }
 
         private fun getAlertIcon(type: AlertType): Int = when(type) {
@@ -54,6 +56,8 @@ class AlertsAdapter : ListAdapter<Alert, AlertsAdapter.ViewHolder>(AlertDiffCall
             AlertType.DOOR_UNAUTHORIZED, AlertType.DOOR_LEFT_OPEN -> R.drawable.ic_door_alert
             AlertType.VIBRATION_DETECTED -> R.drawable.ic_vibration_alert
             AlertType.NFC_UNAUTHORIZED -> R.drawable.ic_nfc_alert
+            AlertType.PROXIMITY -> R.drawable.ic_proximity_alert
+            AlertType.FIRE -> R.drawable.ic_fire_alert
         }
     }
 

@@ -76,10 +76,13 @@ class DashboardViewModel @Inject constructor(
     private fun checkAllSensors(sensors: List<SensorData>) {
         sensors.forEach { sensor ->
             when (sensor.type) {
-                SensorType.GAS -> checkGasLevel(sensor)
+                SensorType.GAS -> {
+                    checkGasLevel(sensor)
+                    checkFireSensor(sensor) // Also check for fire with gas sensor
+                }
                 SensorType.DOOR -> checkDoorStatus(sensor)
                 SensorType.VIBRATION -> checkVibration(sensor)
-                SensorType.ULTRASONIC -> {} // Handle ultrasonic sensor if needed
+                SensorType.ULTRASONIC -> checkProximity(sensor)
                 SensorType.NFC -> {} // NFC module status is handled by NfcViewModel
             }
         }
@@ -96,15 +99,12 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun checkDoorStatus(sensor: SensorData) {
-        viewModelScope.launch {
-            val openDuration = sensorRepository.getDoorOpenDuration(sensor.id)
-            if (openDuration != null && openDuration > DOOR_OPEN_THRESHOLD) {
-                createAlert(
-                    AlertType.DOOR_LEFT_OPEN,
-                    "Door in ${sensor.location} has been open for ${openDuration / 1000 / 60} minutes",
-                    sensor.id
-                )
-            }
+        if (!sensor.isLocked && _isSystemArmed.value) {
+            createAlert(
+                AlertType.NFC_UNAUTHORIZED,
+                "Door in ${sensor.location} is unlocked while system is armed",
+                sensor.id
+            )
         }
     }
 
@@ -113,6 +113,27 @@ class DashboardViewModel @Inject constructor(
             createAlert(
                 AlertType.VIBRATION_DETECTED,
                 "Unusual vibration detected in ${sensor.location}",
+                sensor.id
+            )
+        }
+    }
+    
+    private fun checkFireSensor(sensor: SensorData) {
+        // In ESP32, fire detection is related to the gas sensor
+        if (sensor.value > 900) {
+            createAlert(
+                AlertType.FIRE,
+                "Fire detected in ${sensor.location}",
+                sensor.id
+            )
+        }
+    }
+
+    private fun checkProximity(sensor: SensorData) {
+        if (sensor.value < 20 && _isSystemArmed.value) {
+            createAlert(
+                AlertType.PROXIMITY,
+                "Movement detected in ${sensor.location} (${sensor.value} cm)",
                 sensor.id
             )
         }
