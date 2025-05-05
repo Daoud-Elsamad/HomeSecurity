@@ -44,22 +44,28 @@ class SensorAdapter(
                 doorControls.isVisible = sensor.type == SensorType.DOOR
                 
                 // Clear previous listeners to prevent cross-triggering
-                lockSwitch.setOnCheckedChangeListener(null)
                 enableSwitch.setOnCheckedChangeListener(null)
                 
-                // Set switch states before adding listeners
+                // For door sensors, set up lock/unlock buttons
                 if (sensor.type == SensorType.DOOR) {
-                    lockSwitch.isChecked = sensor.isLocked
-                }
-                enableSwitch.isChecked = sensor.isEnabled
-                
-                // Add listeners after setting states
-                if (sensor.type == SensorType.DOOR) {
-                    lockSwitch.setOnCheckedChangeListener { _, isChecked ->
-                        onLockToggle.invoke(sensor.id, isChecked)
+                    // Clear previous click listeners
+                    unlockButton.setOnClickListener(null)
+                    lockButton.setOnClickListener(null)
+                    
+                    // Set up new click listeners
+                    unlockButton.setOnClickListener {
+                        onLockToggle.invoke(sensor.id, false) // false = unlocked
+                    }
+                    
+                    lockButton.setOnClickListener {
+                        onLockToggle.invoke(sensor.id, true) // true = locked
                     }
                 }
                 
+                // Set enable switch state
+                enableSwitch.isChecked = sensor.isEnabled
+                
+                // Set enable switch listener
                 enableSwitch.setOnCheckedChangeListener { _, isChecked ->
                     onSensorToggle.invoke(sensor.id, isChecked)
                 }

@@ -34,6 +34,7 @@ class AlertsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        observeAlerts()
         
         // Initially show empty state
         showEmptyState(true)
@@ -52,6 +53,15 @@ class AlertsFragment : Fragment() {
                 showEmptyState(alertsAdapter.itemCount == 0)
             }
         })
+    }
+    
+    private fun observeAlerts() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.alerts.collect { alerts ->
+                alertsAdapter.submitList(alerts)
+                showEmptyState(alerts.isEmpty())
+            }
+        }
     }
 
     private fun showEmptyState(show: Boolean) {
