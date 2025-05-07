@@ -1,0 +1,70 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if the current user is an admin
+    function isAdmin() {
+      let userDoc = get(/databases/$(database)/documents/users/$(request.auth.uid));
+      return userDoc != null && userDoc.data.role == "ADMIN";
+    }
+
+    // Users collection - allow admins to manage all users
+    match /users/{userId} {
+      // Anyone authenticated can create users
+      allow create: if request.auth != null;
+      
+      // Users can read/update/delete their own data, admins can manage all users
+      allow read: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow update: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow delete: if request.auth != null && (request.auth.uid == userId || isAdmin());
+    }
+
+    // System config collection
+    match /system_config/{docId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // 🔹 Systems: Allow any authenticated user to read/write for testing
+    match /Systems/{systemId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // 🔹 NFC Readers: Allow any authenticated user to read/write for testing
+    match /NFCReaders/{readerId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // 🔹 NFC Cards: Allow any authenticated user to read/write for testing
+    match /NFCCards/{cardId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // 🔹 Access Attempts: Allow any read/write for testing
+    match /AccessAttempts/{attemptId} {
+      allow read: if request.auth != null;
+      allow write: if true; // Allow ESP32 and any app to write
+    }
+
+    // 🔹 Access Privileges: Allow any authenticated user to read/write for testing
+    match /AccessPrivileges/{privilegeId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // 🔹 Sensors: Allow all authenticated users to read, anyone to write
+    match /Sensors/{sensorId} {
+      allow read: if request.auth != null;
+      allow write: if true; // Allow ESP32 to update sensor data
+    }
+
+    // 🔹 Alerts: Allow all authenticated users to read, anyone to write
+    match /Alerts/{alertId} {
+      allow read: if request.auth != null;
+      allow write: if true; // Allow ESP32 to create alerts
+    }
+    
+    // 🔹 Zones: Allow all authenticated users to read and write
+    match /Zones/{zoneId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+} 
