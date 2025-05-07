@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
@@ -236,31 +237,294 @@
                     android:visibility="gone"
                     android:layout_marginTop="16dp">
 
-                    <Button
-                        android:id="@+id/addUserButton"
+                    <!-- Add User Section -->
+                    <LinearLayout
+                        android:id="@+id/addUserSection"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Add New User"
-                        android:textColor="@color/white"
-                        style="@style/Widget.MaterialComponents.Button"/>
+                        android:orientation="vertical"
+                        android:background="@drawable/ripple_bg"
+                        android:clickable="true"
+                        android:focusable="true">
 
-                    <Button
-                        android:id="@+id/manageUsersButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Manage Users"
-                        android:layout_marginTop="8dp"
-                        android:textColor="@color/white"
-                        style="@style/Widget.MaterialComponents.Button"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingVertical="12dp">
 
-                    <Button
-                        android:id="@+id/userPermissionsButton"
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginEnd="12dp"
+                                android:src="@drawable/ic_add_user"
+                                app:tint="@color/primary"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Add New User"
+                                android:textSize="16sp"
+                                android:textColor="@color/text_primary"/>
+
+                            <ImageView
+                                android:id="@+id/addUserArrow"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_arrow_down"
+                                app:tint="@color/text_secondary"/>
+                        </LinearLayout>
+
+                        <!-- Add User Form - Initially Hidden -->
+                        <LinearLayout
+                            android:id="@+id/addUserFormContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:paddingTop="8dp"
+                            android:paddingStart="32dp"
+                            android:paddingEnd="8dp">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/usernameLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Username"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                                android:layout_marginBottom="8dp">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/usernameInput"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:textSize="14sp"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/passwordLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Password"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                                android:layout_marginBottom="8dp"
+                                app:endIconMode="password_toggle">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/passwordInput"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPassword"
+                                    android:maxLines="1"
+                                    android:textSize="14sp"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:id="@+id/adminCheckbox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Admin User"
+                                android:textSize="14sp"
+                                android:textColor="@color/text_primary"
+                                android:paddingVertical="4dp"
+                                android:layout_marginBottom="8dp"/>
+
+                            <Button
+                                android:id="@+id/addUserButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ADD USER"
+                                android:textSize="12sp"
+                                android:paddingHorizontal="16dp"
+                                android:layout_gravity="end"
+                                android:layout_marginBottom="8dp"
+                                style="@style/Widget.MaterialComponents.Button"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider"
+                        android:layout_marginVertical="8dp"/>
+
+                    <!-- Manage Users Section -->
+                    <LinearLayout
+                        android:id="@+id/manageUsersSection"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="User Permissions"
-                        android:layout_marginTop="8dp"
-                        android:textColor="@color/white"
-                        style="@style/Widget.MaterialComponents.Button"/>
+                        android:orientation="vertical"
+                        android:background="@drawable/ripple_bg"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingVertical="12dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginEnd="12dp"
+                                android:src="@drawable/ic_users"
+                                app:tint="@color/primary"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Manage Users"
+                                android:textSize="16sp"
+                                android:textColor="@color/text_primary"/>
+
+                            <ImageView
+                                android:id="@+id/manageUsersArrow"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_arrow_down"
+                                app:tint="@color/text_secondary"/>
+                        </LinearLayout>
+
+                        <!-- Manage Users Content - Initially Hidden -->
+                        <LinearLayout
+                            android:id="@+id/manageUsersContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:paddingTop="8dp"
+                            android:paddingStart="32dp"
+                            android:paddingEnd="8dp">
+
+                            <TextView
+                                android:id="@+id/emptyUsersMessage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="No users found. Add a user to get started."
+                                android:textSize="14sp"
+                                android:textColor="@color/text_secondary"
+                                android:gravity="center"
+                                android:layout_marginBottom="8dp"
+                                android:visibility="gone"/>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/usersRecyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:clipToPadding="false"
+                                android:minHeight="100dp"
+                                android:maxHeight="200dp"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:listitem="@layout/item_user"
+                                tools:itemCount="3"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider"
+                        android:layout_marginVertical="8dp"/>
+
+                    <!-- User Permissions Section -->
+                    <LinearLayout
+                        android:id="@+id/userPermissionsSection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/ripple_bg"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingVertical="12dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginEnd="12dp"
+                                android:src="@drawable/ic_permissions"
+                                app:tint="@color/primary"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="User Permissions"
+                                android:textSize="16sp"
+                                android:textColor="@color/text_primary"/>
+
+                            <ImageView
+                                android:id="@+id/userPermissionsArrow"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_arrow_down"
+                                app:tint="@color/text_secondary"/>
+                        </LinearLayout>
+
+                        <!-- User Permissions Form - Initially Hidden -->
+                        <LinearLayout
+                            android:id="@+id/userPermissionsContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:paddingTop="8dp"
+                            android:paddingStart="32dp"
+                            android:paddingEnd="8dp">
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:id="@+id/viewLogsPermission"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="View Activity Logs"
+                                android:textSize="13sp"
+                                android:textColor="@color/text_primary"
+                                android:paddingVertical="2dp"
+                                android:layout_marginBottom="1dp"/>
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:id="@+id/manageSensorsPermission"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Manage Sensors"
+                                android:textSize="13sp"
+                                android:textColor="@color/text_primary"
+                                android:paddingVertical="2dp"
+                                android:layout_marginBottom="1dp"/>
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:id="@+id/manageUsersPermission"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Manage Users"
+                                android:textSize="13sp"
+                                android:textColor="@color/text_primary"
+                                android:paddingVertical="2dp"
+                                android:layout_marginBottom="8dp"/>
+
+                            <Button
+                                android:id="@+id/savePermissionsButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SAVE"
+                                android:textSize="12sp"
+                                android:minWidth="0dp"
+                                android:paddingHorizontal="16dp"
+                                android:layout_gravity="end"
+                                android:layout_marginBottom="8dp"
+                                style="@style/Widget.MaterialComponents.Button"/>
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp"
+    android:padding="8dp"
     android:gravity="center_vertical">
 
     <TextView
@@ -11,19 +11,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textColor="@color/text_primary"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="8dp"/>
 
     <TextView
         android:id="@+id/adminBadge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ADMIN"
-        android:textSize="12sp"
+        android:textSize="10sp"
         android:textColor="@color/primary"
         android:background="@drawable/badge_background"
-        android:paddingHorizontal="8dp"
-        android:paddingVertical="4dp"
+        android:paddingHorizontal="6dp"
+        android:paddingVertical="2dp"
         android:visibility="gone"/>
 </LinearLayout> 

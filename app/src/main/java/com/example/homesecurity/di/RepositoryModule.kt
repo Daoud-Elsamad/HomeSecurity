@@ -1,5 +1,7 @@
 package com.example.homesecurity.di
 
+import com.example.homesecurity.repository.AuthRepository
+import com.example.homesecurity.repository.FirebaseAuthRepository
 import com.example.homesecurity.repository.SensorRepository
 import com.example.homesecurity.repository.NfcRepository
 import com.example.homesecurity.repository.SettingsRepository
@@ -33,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindSettingsRepository(
         settingsRepositoryImpl: SettingsRepositoryImpl
     ): SettingsRepository
+    
+    @Binds
+    @Singleton
+    abstract fun bindAuthRepository(
+        firebaseAuthRepository: FirebaseAuthRepository
+    ): AuthRepository
 } 

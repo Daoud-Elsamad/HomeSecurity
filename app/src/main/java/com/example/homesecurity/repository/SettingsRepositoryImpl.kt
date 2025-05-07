@@ -1,5 +1,6 @@
 package com.example.homesecurity.repository
 
+import com.example.homesecurity.models.UserPermissions
 import com.example.homesecurity.viewmodels.DashboardViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -7,7 +8,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SettingsRepositoryImpl @Inject constructor() : SettingsRepository {
+class SettingsRepositoryImpl @Inject constructor(
+    private val authRepository: AuthRepository
+) : SettingsRepository {
     private val gasThreshold = MutableStateFlow(DashboardViewModel.GAS_THRESHOLD)
     private val vibrationSensitivity = MutableStateFlow(DashboardViewModel.VIBRATION_THRESHOLD)
     private val notificationEnabled = MutableStateFlow(true)
@@ -29,10 +32,21 @@ class SettingsRepositoryImpl @Inject constructor() : SettingsRepository {
     }
 
     override suspend fun addUser(username: String, password: String, isAdmin: Boolean) {
-        // TODO: Implement user addition when backend is ready
+        authRepository.createUser(username, password, isAdmin)
     }
 
     override suspend fun updatePermissions(viewLogs: Boolean, manageSensors: Boolean, manageUsers: Boolean) {
-        // TODO: Implement permissions update when backend is ready
+        // Create new permissions object
+        val newPermissions = UserPermissions(
+            canViewLogs = viewLogs,
+            canManageSensors = manageSensors,
+            canManageUsers = manageUsers
+        )
+        
+        // Get current user
+        val currentUser = authRepository.getCurrentUser() ?: return
+        
+        // Update permissions for the current user
+        authRepository.updateUserPermissions(currentUser.id, newPermissions)
     }
 } 

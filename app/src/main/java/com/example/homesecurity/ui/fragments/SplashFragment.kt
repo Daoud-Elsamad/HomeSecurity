@@ -6,16 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.homesecurity.R
 import com.example.homesecurity.databinding.FragmentSplashBinding
+import com.example.homesecurity.viewmodels.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SplashFragment : Fragment() {
     private var _binding: FragmentSplashBinding? = null
     private val binding get() = _binding!!
+    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,20 +74,14 @@ class SplashFragment : Fragment() {
                             .alpha(1f)
                             .setDuration(300)
                             .withEndAction {
-                                // Wait 2 seconds with loading visible before navigating
+                                // Wait 2 seconds with loading visible before checking auth
                                 lifecycleScope.launch {
                                     delay(2000) // 2 seconds delay
                                     binding.loadingIndicator.animate()
                                         .alpha(0f)
                                         .setDuration(200)
                                         .withEndAction {
-                                            findNavController().navigate(
-                                                R.id.action_splashFragment_to_dashboardFragment,
-                                                null,
-                                                androidx.navigation.NavOptions.Builder()
-                                                    .setPopUpTo(R.id.splashFragment, true)
-                                                    .build()
-                                            )
+                                            checkAuthAndNavigate()
                                         }
                                         .start()
                                 }
@@ -92,6 +91,38 @@ class SplashFragment : Fragment() {
                     .start()
             }
             .start()
+    }
+
+    private fun checkAuthAndNavigate() {
+        val currentUser = authViewModel.currentUser.value
+        
+        if (currentUser != null) {
+            // User is already logged in, go to dashboard
+            navigateToDashboard()
+        } else {
+            // User needs to log in
+            navigateToLogin()
+        }
+    }
+    
+    private fun navigateToLogin() {
+        findNavController().navigate(
+            R.id.action_splashFragment_to_loginFragment,
+            null,
+            androidx.navigation.NavOptions.Builder()
+                .setPopUpTo(R.id.splashFragment, true)
+                .build()
+        )
+    }
+    
+    private fun navigateToDashboard() {
+        findNavController().navigate(
+            R.id.action_splashFragment_to_dashboardFragment,
+            null,
+            androidx.navigation.NavOptions.Builder()
+                .setPopUpTo(R.id.splashFragment, true)
+                .build()
+        )
     }
 
     override fun onDestroyView() {

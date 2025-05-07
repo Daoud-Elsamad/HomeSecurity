@@ -60,29 +60,21 @@
                                 android:text="System Status"
                                 android:textSize="14sp"
                                 android:textColor="#99FFFFFF"/>
-
-                            <TextView
-                                android:id="@+id/systemActiveStatus"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="●  Active"
-                                android:textSize="14sp"
-                                android:textColor="#00E676"
-                                android:layout_marginStart="8dp"/>
                         </LinearLayout>
 
                         <TextView
                             android:id="@+id/systemStatusText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="MONITORING"
                             android:textSize="28sp"
-                            android:textColor="#00E676"
+                            android:textColor="#FFFFFF"
                             android:fontFamily="sans-serif-medium"
                             android:layout_marginTop="4dp"/>
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Action Button -->
+                <!-- Action Button (hidden) -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/toggleSystemButton"
                     android:layout_width="match_parent"
@@ -94,6 +86,7 @@
                     android:backgroundTint="#FFFFFF"
                     android:textColor="#000000"
                     android:elevation="4dp"
+                    android:visibility="gone"
                     style="@style/Widget.Material3.Button.ElevatedButton"/>
             </LinearLayout>
 

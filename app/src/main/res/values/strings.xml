@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">HomeSecurity</string>
-    <string name="arm_system">ARM SYSTEM</string>
-    <string name="disarm_system">DISARM SYSTEM</string>
     <string name="system_status">System Status</string>
+    <string name="monitoring">MONITORING</string>
 </resources>

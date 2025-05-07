@@ -33,4 +33,9 @@
     <!-- Component specific -->
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
+    
+    <!-- Dialog dimensions -->
+    <dimen name="dialog_width">320dp</dimen>
+    <dimen name="dialog_margin_horizontal">16dp</dimen>
+    <dimen name="dialog_margin_vertical">8dp</dimen>
 </resources> 

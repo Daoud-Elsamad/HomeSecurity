@@ -2,6 +2,8 @@ package com.example.homesecurity.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.homesecurity.models.User
+import com.example.homesecurity.repository.AuthRepository
 import com.example.homesecurity.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
     
     private val _gasThreshold = MutableStateFlow(400.0)
@@ -23,9 +26,13 @@ class SettingsViewModel @Inject constructor(
     
     private val _notificationEnabled = MutableStateFlow(true)
     val notificationEnabled: StateFlow<Boolean> = _notificationEnabled.asStateFlow()
+    
+    private val _users = MutableStateFlow<List<User>>(emptyList())
+    val users: StateFlow<List<User>> = _users.asStateFlow()
 
     init {
         observeSettings()
+        observeUsers()
     }
 
     private fun observeSettings() {
@@ -42,6 +49,14 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             settingsRepository.getNotificationPreference().collect {
                 _notificationEnabled.value = it
+            }
+        }
+    }
+    
+    private fun observeUsers() {
+        viewModelScope.launch {
+            authRepository.getAllUsers().collect {
+                _users.value = it
             }
         }
     }

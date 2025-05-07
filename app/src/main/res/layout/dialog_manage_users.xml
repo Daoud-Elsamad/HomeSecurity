@@ -6,22 +6,34 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/dialog_background"
-    android:padding="24dp">
+    android:padding="12dp"
+    android:minWidth="300dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Manage Users"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textColor="@color/text_primary"
         android:textStyle="bold"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="12dp"/>
+
+    <TextView
+        android:id="@+id/emptyUsersMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No users found. Add a user to get started."
+        android:textSize="14sp"
+        android:textColor="@color/text_secondary"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/usersRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_user"
@@ -32,6 +44,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DONE"
+        android:textSize="12sp"
+        android:minWidth="0dp"
+        android:paddingHorizontal="12dp"
         android:layout_gravity="end"
         style="@style/Widget.MaterialComponents.Button"/>
 </LinearLayout> 

@@ -4,48 +4,52 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/dialog_background"
-    android:padding="24dp">
+    android:padding="10dp"
+    android:minWidth="300dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="User Permissions"
-        android:textSize="20sp"
+        android:textSize="14sp"
         android:textColor="@color/text_primary"
         android:textStyle="bold"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="8dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="24dp">
+        android:layout_marginBottom="8dp">
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/viewLogsPermission"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="View Activity Logs"
+            android:textSize="13sp"
             android:textColor="@color/text_primary"
-            android:paddingVertical="12dp"
-            android:layout_marginBottom="8dp"/>
+            android:paddingVertical="2dp"
+            android:layout_marginBottom="1dp"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/manageSensorsPermission"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Manage Sensors"
+            android:textSize="13sp"
             android:textColor="@color/text_primary"
-            android:paddingVertical="12dp"
-            android:layout_marginBottom="8dp"/>
+            android:paddingVertical="2dp"
+            android:layout_marginBottom="1dp"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/manageUsersPermission"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Manage Users"
+            android:textSize="13sp"
             android:textColor="@color/text_primary"
-            android:paddingVertical="12dp"/>
+            android:paddingVertical="2dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -59,7 +63,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CANCEL"
+            android:textSize="11sp"
             android:textColor="@color/primary"
+            android:minWidth="0dp"
+            android:paddingHorizontal="6dp"
+            android:minHeight="36dp"
             style="@style/Widget.MaterialComponents.Button.TextButton"/>
 
         <Button
@@ -67,7 +75,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SAVE"
-            android:layout_marginStart="16dp"
+            android:textSize="11sp"
+            android:minWidth="0dp"
+            android:paddingHorizontal="10dp"
+            android:minHeight="36dp"
+            android:layout_marginStart="4dp"
             style="@style/Widget.MaterialComponents.Button"/>
     </LinearLayout>
 </LinearLayout> 

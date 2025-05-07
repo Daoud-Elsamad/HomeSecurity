@@ -22,9 +22,6 @@ class DashboardViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
     
-    private val _isSystemArmed = MutableStateFlow(false)
-    val isSystemArmed: StateFlow<Boolean> = _isSystemArmed.asStateFlow()
-    
     private val _sensorData = MutableStateFlow<List<SensorData>>(emptyList())
     val sensorData: StateFlow<List<SensorData>> = _sensorData.asStateFlow()
     
@@ -37,10 +34,6 @@ class DashboardViewModel @Inject constructor(
     init {
         startMonitoring()
         observeSettings()
-    }
-
-    fun toggleSystemArmed() {
-        _isSystemArmed.value = !_isSystemArmed.value
     }
 
     private fun startMonitoring() {
@@ -99,10 +92,10 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun checkDoorStatus(sensor: SensorData) {
-        if (!sensor.isLocked && _isSystemArmed.value) {
+        if (!sensor.isLocked) {
             createAlert(
                 AlertType.NFC_UNAUTHORIZED,
-                "Door in ${sensor.location} is unlocked while system is armed",
+                "Door in ${sensor.location} is unlocked",
                 sensor.id
             )
         }
@@ -130,7 +123,7 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun checkProximity(sensor: SensorData) {
-        if (sensor.value < 20 && _isSystemArmed.value) {
+        if (sensor.value < 20) {
             createAlert(
                 AlertType.PROXIMITY,
                 "Movement detected in ${sensor.location} (${sensor.value} cm)",
