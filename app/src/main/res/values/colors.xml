@@ -2,6 +2,7 @@
 <resources>
     <!-- Theme Colors -->
     <color name="background">#F0F2F5</color>
+    <color name="background_light">#F8FAFC</color>
     <color name="surface">#FFFFFF</color>
     <color name="primary">#4361EE</color>
     <color name="secondary">#2DD4BF</color>
@@ -25,8 +26,8 @@
     <color name="nav_selected_background">#33FFFFFF</color>
     
     <!-- Text Colors -->
-    <color name="text_primary">@color/black</color>
-    <color name="text_secondary">#666666</color>
+    <color name="text_primary">#1E293B</color>
+    <color name="text_secondary">#64748B</color>
     <color name="divider">#E0E0E0</color>
     
     <!-- Status Colors -->
@@ -48,4 +49,9 @@
     <!-- Gradient Colors -->
     <color name="card_gradient_start">@color/white</color>
     <color name="card_gradient_end">#F1F5F9</color>
+    
+    <!-- Alert Colors -->
+    <color name="acknowledged_alert_bg">#F1F5F9</color>
+    <color name="alert_icon_background">#EFF6FF</color>
+    <color name="success_green">#10B981</color>
 </resources>

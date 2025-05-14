@@ -3,11 +3,14 @@ package com.example.homesecurity
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.nfc.NfcAdapter
 import android.nfc.Tag
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -19,6 +22,7 @@ import com.example.homesecurity.databinding.ActivityMainBinding
 import com.example.homesecurity.ui.fragments.NfcRegistrationFragment
 import com.example.homesecurity.ui.fragments.NfcScanFragment
 import dagger.hilt.android.AndroidEntryPoint
+import android.Manifest
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -26,6 +30,17 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private var nfcAdapter: NfcAdapter? = null
     private var pendingIntent: PendingIntent? = null
+
+    // Request permission launcher
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            // Permission granted, notifications will work
+        } else {
+            // Permission denied, notifications won't work but app continues
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_HomeSecurity_Splash)
@@ -74,6 +89,17 @@ class MainActivity : AppCompatActivity() {
                 Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
             )
+        }
+        
+        // Request notification permission for Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
     }
 

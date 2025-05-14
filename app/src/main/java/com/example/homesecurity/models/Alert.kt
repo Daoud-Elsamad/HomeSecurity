@@ -8,7 +8,8 @@ data class Alert(
     val message: String,
     val timestamp: Long = System.currentTimeMillis(),
     val sensorId: String,
-    val isAcknowledged: Boolean = false
+    val isAcknowledged: Boolean = false,
+    val originalId: String? = null
 )
 
 enum class AlertType {

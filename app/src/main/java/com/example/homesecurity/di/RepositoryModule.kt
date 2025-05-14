@@ -7,7 +7,7 @@ import com.example.homesecurity.repository.NfcRepository
 import com.example.homesecurity.repository.SettingsRepository
 import com.example.homesecurity.repository.SettingsRepositoryImpl
 import com.example.homesecurity.repository.FirestoreNfcRepository
-import com.example.homesecurity.repository.RealtimeDatabaseSensorRepository
+import com.example.homesecurity.repository.HybridSensorRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,7 +21,7 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindSensorRepository(
-        realtimeDatabaseSensorRepository: RealtimeDatabaseSensorRepository
+        hybridSensorRepository: HybridSensorRepository
     ): SensorRepository
 
     @Binds
