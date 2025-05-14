@@ -61,12 +61,6 @@
         android:label="Access Logs" />
 
     <fragment
-        android:id="@+id/floorPlanFragment"
-        android:name="com.example.homesecurity.ui.fragments.FloorPlanFragment"
-        android:label="Floor Plan"
-        tools:layout="@layout/fragment_floor_plan" />
-
-    <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.homesecurity.ui.fragments.SettingsFragment"
         android:label="Settings">

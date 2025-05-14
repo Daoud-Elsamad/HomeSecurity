@@ -322,26 +322,46 @@
                                     android:textSize="14sp"/>
                             </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.checkbox.MaterialCheckBox
-                                android:id="@+id/adminCheckbox"
+                            <!-- Role Selection -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/roleLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Admin User"
-                                android:textSize="14sp"
-                                android:textColor="@color/text_primary"
-                                android:paddingVertical="4dp"
-                                android:layout_marginBottom="8dp"/>
+                                android:hint="Role"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                android:layout_marginBottom="8dp">
 
-                            <Button
-                                android:id="@+id/addUserButton"
-                                android:layout_width="wrap_content"
+                                <AutoCompleteTextView
+                                    android:id="@+id/roleDropdown"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="none"
+                                    android:text="Guest" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="ADD USER"
-                                android:textSize="12sp"
-                                android:paddingHorizontal="16dp"
-                                android:layout_gravity="end"
-                                android:layout_marginBottom="8dp"
-                                style="@style/Widget.MaterialComponents.Button"/>
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="8dp">
+
+                                <com.google.android.material.checkbox.MaterialCheckBox
+                                    android:id="@+id/adminCheckbox"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone" />
+
+                                <Button
+                                    android:id="@+id/addUserButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="ADD USER"
+                                    android:layout_gravity="end"
+                                    android:textSize="12sp"
+                                    android:paddingHorizontal="16dp"
+                                    android:layout_marginBottom="8dp"
+                                    style="@style/Widget.MaterialComponents.Button"/>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
 
@@ -482,47 +502,80 @@
                             android:paddingStart="32dp"
                             android:paddingEnd="8dp">
 
+                            <TextView
+                                android:id="@+id/selectedUserLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Select a user first"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginBottom="8dp" />
+
+                            <!-- Role Selection -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/editRoleLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Change Role"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                android:layout_marginBottom="16dp">
+
+                                <AutoCompleteTextView
+                                    android:id="@+id/editRoleDropdown"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="none" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Permissions"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginBottom="8dp" />
+
                             <com.google.android.material.checkbox.MaterialCheckBox
                                 android:id="@+id/viewLogsPermission"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="View Activity Logs"
-                                android:textSize="13sp"
-                                android:textColor="@color/text_primary"
-                                android:paddingVertical="2dp"
-                                android:layout_marginBottom="1dp"/>
+                                android:text="Can View Logs" />
 
                             <com.google.android.material.checkbox.MaterialCheckBox
                                 android:id="@+id/manageSensorsPermission"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Manage Sensors"
-                                android:textSize="13sp"
-                                android:textColor="@color/text_primary"
-                                android:paddingVertical="2dp"
-                                android:layout_marginBottom="1dp"/>
+                                android:text="Can Manage Sensors" />
 
                             <com.google.android.material.checkbox.MaterialCheckBox
                                 android:id="@+id/manageUsersPermission"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Manage Users"
-                                android:textSize="13sp"
-                                android:textColor="@color/text_primary"
-                                android:paddingVertical="2dp"
-                                android:layout_marginBottom="8dp"/>
+                                android:text="Can Manage Users" />
 
-                            <Button
-                                android:id="@+id/savePermissionsButton"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="SAVE"
-                                android:textSize="12sp"
-                                android:minWidth="0dp"
-                                android:paddingHorizontal="16dp"
-                                android:layout_gravity="end"
-                                android:layout_marginBottom="8dp"
-                                style="@style/Widget.MaterialComponents.Button"/>
+                                android:orientation="horizontal"
+                                android:gravity="end"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="8dp">
+
+                                <Button
+                                    android:id="@+id/deleteUserButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="DELETE USER"
+                                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                    android:textColor="#D32F2F"
+                                    android:layout_marginEnd="8dp" />
+
+                                <Button
+                                    android:id="@+id/savePermissionsButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="SAVE" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

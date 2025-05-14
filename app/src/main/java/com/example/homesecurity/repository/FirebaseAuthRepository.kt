@@ -83,6 +83,25 @@ class FirebaseAuthRepository @Inject constructor() : AuthRepository {
         }
     }
 
+    // Public method to manually refresh users list
+    override fun refreshUsersList() {
+        usersCollection.get()
+            .addOnSuccessListener { snapshot ->
+                val usersList = snapshot.documents.mapNotNull { doc ->
+                    try {
+                        doc.toObject(User::class.java)
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error parsing user: ", e)
+                        null
+                    }
+                }
+                allUsersFlow.value = usersList
+            }
+            .addOnFailureListener { error ->
+                Log.e(TAG, "Error refreshing users list: ", error)
+            }
+    }
+
     override suspend fun login(username: String, password: String): Result<User> {
         return try {
             // For the first login with default admin credentials
@@ -271,6 +290,132 @@ class FirebaseAuthRepository @Inject constructor() : AuthRepository {
             Result.success(adminUser)
         } catch (e: Exception) {
             Log.e(TAG, "Error creating default admin account: ", e)
+            Result.failure(e)
+        }
+    }
+
+    // Implementation of the new methods
+    override suspend fun getUserById(userId: String): Result<User> {
+        return try {
+            val userDoc = usersCollection.document(userId).get().await()
+            if (userDoc.exists()) {
+                val user = userDoc.toObject(User::class.java)
+                    ?: return Result.failure(Exception("Failed to parse user data"))
+                Result.success(user)
+            } else {
+                Result.failure(Exception("User not found"))
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting user by ID: ", e)
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun updateUserRole(userId: String, role: UserRole): Result<Unit> {
+        return try {
+            // Make sure current user is admin
+            val currentUser = currentUserFlow.value
+            if (currentUser?.role != UserRole.ADMIN) {
+                return Result.failure(Exception("Only admins can update user roles"))
+            }
+            
+            // Get the new permissions based on the role
+            val permissions = UserPermissions.fromRole(role)
+            
+            // Update both role and permissions in Firestore
+            usersCollection.document(userId)
+                .update(
+                    mapOf(
+                        "role" to role,
+                        "permissions" to permissions
+                    )
+                ).await()
+            
+            // Force refresh the specific user in the users list
+            val updatedUserDoc = usersCollection.document(userId).get().await()
+            if (updatedUserDoc.exists()) {
+                val updatedUser = updatedUserDoc.toObject(User::class.java)
+                if (updatedUser != null) {
+                    // Update the user in the list
+                    val currentList = allUsersFlow.value.toMutableList()
+                    val index = currentList.indexOfFirst { it.id == userId }
+                    if (index != -1) {
+                        currentList[index] = updatedUser
+                        allUsersFlow.value = currentList
+                    }
+                }
+            }
+                
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating user role: ", e)
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun deleteUser(userId: String): Result<Unit> {
+        return try {
+            // Make sure current user is admin
+            val currentUser = currentUserFlow.value
+            if (currentUser?.role != UserRole.ADMIN) {
+                return Result.failure(Exception("Only admins can delete users"))
+            }
+            
+            // Don't allow deleting yourself
+            if (currentUser.id == userId) {
+                return Result.failure(Exception("Cannot delete your own account"))
+            }
+            
+            // Get user auth details
+            val userDoc = usersCollection.document(userId).get().await()
+            if (!userDoc.exists()) {
+                return Result.failure(Exception("User not found"))
+            }
+            
+            // Delete from Firestore first
+            usersCollection.document(userId).delete().await()
+            
+            // Delete from Firebase Auth (requires admin SDK in real implementation)
+            // Note: This is a placeholder. In a real app, you'd use Firebase Admin SDK or Cloud Functions
+            // This would typically be done on the backend for security
+            // auth.getUser(userId).delete() - Admin SDK method
+            
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error deleting user: ", e)
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun createUserWithRole(username: String, password: String, role: UserRole): Result<User> {
+        return try {
+            // Make sure current user is admin
+            val currentUser = currentUserFlow.value
+            if (currentUser?.role != UserRole.ADMIN) {
+                return Result.failure(Exception("Only admins can create users"))
+            }
+            
+            val email = "$username@homesecurity.app" // Create email from username
+            val authResult = auth.createUserWithEmailAndPassword(email, password).await()
+            val firebaseUser = authResult.user ?: return Result.failure(Exception("User creation failed"))
+
+            val permissions = UserPermissions.fromRole(role)
+
+            val user = User(
+                id = firebaseUser.uid,
+                username = username,
+                email = email,
+                role = role,
+                permissions = permissions,
+                hasChangedDefaultPassword = true // Normal users start with changed password
+            )
+
+            // Save user to Firestore
+            usersCollection.document(firebaseUser.uid).set(user).await()
+
+            Result.success(user)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error creating user with role: ", e)
             Result.failure(e)
         }
     }

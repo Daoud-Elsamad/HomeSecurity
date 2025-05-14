@@ -6,6 +6,8 @@ import com.example.homesecurity.models.Alert
 import com.example.homesecurity.models.AlertType
 import com.example.homesecurity.models.SensorData
 import com.example.homesecurity.models.SensorType
+import com.example.homesecurity.models.User
+import com.example.homesecurity.repository.AuthRepository
 import com.example.homesecurity.repository.SensorRepository
 import com.example.homesecurity.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val sensorRepository: SensorRepository,
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
     
     private val _sensorData = MutableStateFlow<List<SensorData>>(emptyList())
@@ -27,6 +30,9 @@ class DashboardViewModel @Inject constructor(
     
     private val _alerts = MutableStateFlow<List<Alert>>(emptyList())
     val alerts: StateFlow<List<Alert>> = _alerts.asStateFlow()
+    
+    private val _currentUser = MutableStateFlow<User?>(null)
+    val currentUser: StateFlow<User?> = _currentUser.asStateFlow()
 
     private var currentGasThreshold = GAS_THRESHOLD
     private var currentVibrationThreshold = VIBRATION_THRESHOLD
@@ -34,6 +40,15 @@ class DashboardViewModel @Inject constructor(
     init {
         startMonitoring()
         observeSettings()
+        observeCurrentUser()
+    }
+    
+    private fun observeCurrentUser() {
+        viewModelScope.launch {
+            authRepository.observeAuthState().collect { user ->
+                _currentUser.value = user
+            }
+        }
     }
 
     private fun startMonitoring() {

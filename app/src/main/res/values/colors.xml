@@ -44,9 +44,6 @@
     <!-- Switch Colors -->
     <color name="switch_thumb">@color/primary</color>
     <color name="switch_track">#80808080</color>
-    
-    <!-- Floor Plan Colors -->
-    <color name="floor_plan_wall">#424242</color>
 
     <!-- Gradient Colors -->
     <color name="card_gradient_start">@color/white</color>

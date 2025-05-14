@@ -19,9 +19,4 @@
         android:id="@+id/accessLogsFragment"
         android:icon="@drawable/ic_history"
         android:title="Access Logs" />
-    
-    <item
-        android:id="@+id/floorPlanFragment"
-        android:icon="@drawable/ic_floor_plan"
-        android:title="Floor Plan"/>
 </menu> 

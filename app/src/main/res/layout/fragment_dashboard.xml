@@ -24,6 +24,17 @@
                 android:paddingHorizontal="20dp"
                 android:paddingTop="32dp"
                 android:paddingBottom="40dp">
+                
+                <!-- Welcome Message TextView -->
+                <TextView
+                    android:id="@+id/welcomeMessageText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome"
+                    android:textSize="18sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="16dp"/>
 
                 <!-- System Status Section -->
                 <LinearLayout

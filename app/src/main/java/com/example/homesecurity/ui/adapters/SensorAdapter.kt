@@ -13,8 +13,14 @@ import com.example.homesecurity.models.SensorType
 
 class SensorAdapter(
     private val onLockToggle: (String, Boolean) -> Unit,
-    private val onSensorToggle: (String, Boolean) -> Unit
+    private val onSensorToggle: (String, Boolean) -> Unit,
+    private var showControls: Boolean = true
 ) : ListAdapter<SensorData, SensorAdapter.ViewHolder>(SensorDiffCallback()) {
+
+    fun updateControlPermissions(showControls: Boolean) {
+        this.showControls = showControls
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemSensorBinding.inflate(
@@ -41,13 +47,16 @@ class SensorAdapter(
                 sensorValue.text = formatSensorValue(sensor)
                 
                 // Door lock toggle (only for door sensors)
-                doorControls.isVisible = sensor.type == SensorType.DOOR
+                doorControls.isVisible = sensor.type == SensorType.DOOR && showControls
+                
+                // Only show enable switch if controls are visible
+                enableSwitch.isVisible = showControls
                 
                 // Clear previous listeners to prevent cross-triggering
                 enableSwitch.setOnCheckedChangeListener(null)
                 
                 // For door sensors, set up lock/unlock buttons
-                if (sensor.type == SensorType.DOOR) {
+                if (sensor.type == SensorType.DOOR && showControls) {
                     // Clear previous click listeners
                     unlockButton.setOnClickListener(null)
                     lockButton.setOnClickListener(null)

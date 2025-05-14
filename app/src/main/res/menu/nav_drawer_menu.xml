@@ -22,11 +22,6 @@
             android:title="Access Logs" />
         
         <item
-            android:id="@+id/floorPlanFragment"
-            android:icon="@drawable/ic_floor_plan"
-            android:title="Floor Plan"/>
-        
-        <item
             android:id="@+id/settingsFragment"
             android:icon="@drawable/ic_settings"
             android:title="Settings" />
