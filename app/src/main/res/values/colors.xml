@@ -54,4 +54,26 @@
     <color name="acknowledged_alert_bg">#F1F5F9</color>
     <color name="alert_icon_background">#EFF6FF</color>
     <color name="success_green">#10B981</color>
+    
+    <!-- Additional Colors -->
+    <color name="primary_light">#EEF2FF</color>
+    <color name="on_surface">#1E293B</color>
+    
+    <!-- Lock/Unlock Button Colors -->
+    <color name="lock_button_background">#DC2626</color>
+    <color name="lock_button_ripple">#B91C1C</color>
+    <color name="unlock_button_background">#059669</color>
+    <color name="unlock_button_ripple">#047857</color>
+    
+    <!-- Modern UI Colors -->
+    <color name="header_blue">#4F46E5</color>
+    <color name="header_purple">#7C3AED</color>
+    <color name="text_gray_900">#1F2937</color>
+    <color name="text_gray_600">#6B7280</color>
+    <color name="text_gray_400">#9CA3AF</color>
+    <color name="bg_gray_50">#F9FAFB</color>
+    <color name="bg_gray_100">#F3F4F6</color>
+    <color name="bg_blue_50">#EEF2FF</color>
+    <color name="green_50">#D1FAE5</color>
+    <color name="green_600">#10B981</color>
 </resources>

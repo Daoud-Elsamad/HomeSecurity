@@ -65,22 +65,32 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/lockText"
+            <!-- Lock Controls -->
+            <LinearLayout
+                android:id="@+id/lockControls"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lock"
-                android:textSize="13sp"
-                android:textColor="#4361EE"
-                android:layout_marginEnd="4dp"
-                android:visibility="gone"/>
+                android:orientation="horizontal"
+                android:layout_marginEnd="12dp"
+                android:visibility="gone">
 
-            <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/lockSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:visibility="gone"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/unlockButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Unlock"
+                    android:layout_marginEnd="8dp"
+                    app:icon="@drawable/ic_unlock"
+                    style="@style/Widget.App.Button.Unlock"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/lockButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lock"
+                    app:icon="@drawable/ic_lock"
+                    style="@style/Widget.App.Button.Lock"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/enableText"
@@ -94,7 +104,8 @@
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/enableSwitch"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                style="@style/Widget.App.Switch"/>
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView> 

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="#F5F7FA">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -15,25 +15,35 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Top Section with Gradient Background -->
+            <!-- Top Section with Blue Gradient Background -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/dashboard_top_gradient"
-                android:paddingHorizontal="20dp"
-                android:paddingTop="32dp"
-                android:paddingBottom="40dp">
+                android:background="@drawable/dashboard_header_gradient"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="48dp"
+                android:paddingBottom="32dp">
                 
-                <!-- Welcome Message TextView -->
+                <!-- Welcome Message -->
                 <TextView
                     android:id="@+id/welcomeMessageText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Welcome"
-                    android:textSize="18sp"
+                    android:text="Welcome, Admin"
+                    android:textSize="28sp"
                     android:textColor="#FFFFFF"
                     android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="8dp"/>
+
+                <!-- System Status Label -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="System Status"
+                    android:textSize="16sp"
+                    android:textColor="#B3FFFFFF"
+                    android:fontFamily="sans-serif"
                     android:layout_marginBottom="16dp"/>
 
                 <!-- System Status Section -->
@@ -41,48 +51,34 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:background="@drawable/status_card_background"
+                    android:padding="16dp">
 
-                    <ImageView
-                        android:id="@+id/shieldIcon"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:src="@drawable/ic_shield"
-                        android:background="@drawable/shield_background"
-                        android:padding="12dp"
-                        app:tint="#FFFFFF"/>
+                    <!-- Status Indicator -->
+                    <View
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:background="@drawable/status_indicator_active"
+                        android:layout_marginEnd="12dp"/>
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/systemStatusText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="16dp">
+                        android:text="MONITORING"
+                        android:textSize="18sp"
+                        android:textColor="#FFFFFF"
+                        android:fontFamily="sans-serif-medium"/>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="System Status"
-                                android:textSize="14sp"
-                                android:textColor="#99FFFFFF"/>
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/systemStatusText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="MONITORING"
-                            android:textSize="28sp"
-                            android:textColor="#FFFFFF"
-                            android:fontFamily="sans-serif-medium"
-                            android:layout_marginTop="4dp"/>
-                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Active"
+                        android:textSize="14sp"
+                        android:textColor="#B3FFFFFF"
+                        android:fontFamily="sans-serif"/>
                 </LinearLayout>
 
                 <!-- Action Button (hidden) -->
@@ -106,24 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
-
-                <!-- Sensors Header -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Security Sensors"
-                        android:textSize="20sp"
-                        android:textColor="@color/text_primary"
-                        android:fontFamily="sans-serif-medium"/>
-                </LinearLayout>
+                android:padding="16dp">
 
                 <!-- Sensors List -->
                 <androidx.recyclerview.widget.RecyclerView

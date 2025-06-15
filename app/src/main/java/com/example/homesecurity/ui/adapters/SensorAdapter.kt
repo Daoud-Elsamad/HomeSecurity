@@ -1,12 +1,14 @@
 package com.example.homesecurity.ui.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.homesecurity.R
 import com.example.homesecurity.databinding.ItemSensorBinding
 import com.example.homesecurity.models.SensorData
 import com.example.homesecurity.models.SensorType
@@ -43,8 +45,24 @@ class SensorAdapter(
             binding.root.translationY = 0f
             
             binding.apply {
-                sensorName.text = "${sensor.type.name} - ${sensor.location}"
-                sensorValue.text = formatSensorValue(sensor)
+                // Set sensor name and type
+                sensorName.text = getSensorName(sensor)
+                sensorType.text = getSensorTypeDisplay(sensor.type)
+                
+                // Set sensor icon based on type
+                sensorIcon.setImageResource(getSensorIcon(sensor.type))
+                
+                // Set sensor value (only show for non-door sensors)
+                val formattedValue = formatSensorValue(sensor)
+                if (formattedValue.isNotEmpty() && sensor.type != SensorType.DOOR) {
+                    sensorValue.text = formattedValue
+                    sensorValue.visibility = View.VISIBLE
+                } else {
+                    sensorValue.visibility = View.GONE
+                }
+                
+                // Set sensor status
+                sensorStatus.text = getSensorStatus(sensor)
                 
                 // Door lock toggle (only for door sensors)
                 doorControls.isVisible = sensor.type == SensorType.DOOR && showControls
@@ -80,13 +98,53 @@ class SensorAdapter(
                 }
             }
         }
+        
+        private fun getSensorIcon(sensorType: SensorType): Int {
+            return when (sensorType) {
+                SensorType.DOOR -> R.drawable.ic_door_sensor
+                SensorType.GAS -> R.drawable.ic_fire_alert
+                SensorType.VIBRATION -> R.drawable.ic_vibration_sensor
+                SensorType.ULTRASONIC -> R.drawable.ic_ultrasonic_sensor
+                SensorType.NFC -> R.drawable.ic_nfc
+            }
+        }
+        
+        private fun getSensorTypeDisplay(sensorType: SensorType): String {
+            return when (sensorType) {
+                SensorType.DOOR -> "Door Sensor"
+                SensorType.GAS -> "Gas Detection"
+                SensorType.VIBRATION -> "Living Room"
+                SensorType.ULTRASONIC -> "Entrance"
+                SensorType.NFC -> "Main Door Access"
+            }
+        }
+        
+        private fun getSensorStatus(sensor: SensorData): String {
+            return when (sensor.type) {
+                SensorType.DOOR -> if (sensor.value > 0) "Open" else "Closed"
+                SensorType.GAS -> if (sensor.value > 300) "Alert" else "Normal"
+                SensorType.VIBRATION -> if (sensor.value > 0) "Active" else "Inactive"
+                SensorType.ULTRASONIC -> "Active"
+                SensorType.NFC -> "Ready"
+            }
+        }
 
         private fun formatSensorValue(sensor: SensorData): String {
             return when (sensor.type) {
-                SensorType.GAS -> "${sensor.value} ppm"
-                SensorType.DOOR -> if (sensor.value > 0) "Open" else "Closed"
-                SensorType.VIBRATION -> "${sensor.value} Hz"
-                SensorType.ULTRASONIC -> "${sensor.value} cm"
+                SensorType.GAS -> "${sensor.value}ppm"
+                SensorType.DOOR -> "" // Status is shown separately
+                SensorType.VIBRATION -> "${sensor.value}Hz"
+                SensorType.ULTRASONIC -> "${sensor.value}cm"
+                SensorType.NFC -> "" // No value needed
+            }
+        }
+
+        private fun getSensorName(sensor: SensorData): String {
+            return when (sensor.type) {
+                SensorType.DOOR -> "Main Door"
+                SensorType.GAS -> "Kitchen Gas Sensor"
+                SensorType.VIBRATION -> "Vibration Sensor"
+                SensorType.ULTRASONIC -> "Ultrasonic Sensor"
                 SensorType.NFC -> "NFC Module"
             }
         }

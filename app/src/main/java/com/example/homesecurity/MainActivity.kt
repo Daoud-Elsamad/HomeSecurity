@@ -73,11 +73,16 @@ class MainActivity : AppCompatActivity() {
 
         // Update toolbar title on destination change
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.splashFragment) {
-                binding.toolbar.visibility = View.GONE
-            } else {
-                binding.toolbar.visibility = View.VISIBLE
-                binding.toolbar.title = destination.label
+            when (destination.id) {
+                R.id.splashFragment, R.id.loginFragment -> {
+                    binding.toolbar.visibility = View.GONE
+                    binding.drawerLayout.setDrawerLockMode(androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                }
+                else -> {
+                    binding.toolbar.visibility = View.VISIBLE
+                    binding.toolbar.title = destination.label
+                    binding.drawerLayout.setDrawerLockMode(androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED)
+                }
             }
         }
 

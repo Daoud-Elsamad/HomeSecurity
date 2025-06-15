@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.google.android.material.card.MaterialCardView
@@ -64,10 +65,12 @@ class SensorCardView @JvmOverloads constructor(
             sensorValue.text = formatSensorValue(data)
 
             // Show/hide lock controls for door sensors
-            lockText.visibility = if (data.type == SensorType.DOOR) VISIBLE else GONE
-            lockSwitch.visibility = if (data.type == SensorType.DOOR) VISIBLE else GONE
+            lockControls.visibility = if (data.type == SensorType.DOOR) View.VISIBLE else View.GONE
             if (data.type == SensorType.DOOR) {
-                lockSwitch.isChecked = data.isLocked ?: false
+                // Update lock button states based on door lock status
+                val isLocked = data.isLocked ?: false
+                unlockButton.isEnabled = isLocked
+                lockButton.isEnabled = !isLocked
             }
 
             // Update enable switch

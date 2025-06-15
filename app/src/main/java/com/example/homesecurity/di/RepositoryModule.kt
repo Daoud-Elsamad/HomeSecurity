@@ -8,6 +8,8 @@ import com.example.homesecurity.repository.SettingsRepository
 import com.example.homesecurity.repository.SettingsRepositoryImpl
 import com.example.homesecurity.repository.FirestoreNfcRepository
 import com.example.homesecurity.repository.HybridSensorRepository
+import com.example.homesecurity.repository.AccessLogRepository
+import com.example.homesecurity.repository.FirebaseAccessLogRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -41,4 +43,10 @@ abstract class RepositoryModule {
     abstract fun bindAuthRepository(
         firebaseAuthRepository: FirebaseAuthRepository
     ): AuthRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAccessLogRepository(
+        firebaseAccessLogRepository: FirebaseAccessLogRepository
+    ): AccessLogRepository
 } 

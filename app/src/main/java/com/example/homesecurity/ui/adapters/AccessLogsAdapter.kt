@@ -33,8 +33,22 @@ class AccessLogsAdapter : ListAdapter<ActivityLog, AccessLogsAdapter.ViewHolder>
                 logType.text = when(log.type) {
                     LogType.NFC_ACCESS -> "NFC Access"
                     LogType.SENSOR_EVENT -> "Sensor Event"
+                    LogType.DOOR_ENTRY -> "Door Entry"
+                    LogType.DOOR_EXIT -> "Door Exit"
+                    LogType.UNAUTHORIZED_ACCESS -> "Unauthorized Access"
                 }
                 description.text = log.description
+                
+                // Set appropriate text color based on log type
+                val textColor = when(log.type) {
+                    LogType.DOOR_ENTRY -> itemView.context.getColor(android.R.color.holo_green_dark)
+                    LogType.DOOR_EXIT -> itemView.context.getColor(android.R.color.holo_blue_dark)
+                    LogType.UNAUTHORIZED_ACCESS -> itemView.context.getColor(android.R.color.holo_red_dark)
+                    LogType.NFC_ACCESS -> itemView.context.getColor(android.R.color.holo_purple)
+                    else -> itemView.context.getColor(android.R.color.black)
+                }
+                description.setTextColor(textColor)
+                logType.setTextColor(textColor)
             }
         }
     }

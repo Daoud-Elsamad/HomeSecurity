@@ -12,6 +12,7 @@ import com.example.homesecurity.repository.AuthRepository
 import com.example.homesecurity.repository.HybridSensorRepository
 import com.example.homesecurity.repository.SensorRepository
 import com.example.homesecurity.repository.SettingsRepository
+import com.example.homesecurity.repository.AccessLogRepository
 import com.example.homesecurity.services.NotificationService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,7 +33,8 @@ class DashboardViewModel @Inject constructor(
     private val sensorRepository: SensorRepository,
     private val settingsRepository: SettingsRepository,
     private val authRepository: AuthRepository,
-    private val notificationService: NotificationService
+    private val notificationService: NotificationService,
+    private val accessLogRepository: AccessLogRepository
 ) : ViewModel() {
     
     // Cast the repository to HybridSensorRepository if possible
@@ -40,6 +42,9 @@ class DashboardViewModel @Inject constructor(
     
     private val _sensorData = MutableStateFlow<List<SensorData>>(emptyList())
     val sensorData: StateFlow<List<SensorData>> = _sensorData.asStateFlow()
+    
+    // Keep track of previous door states to detect state changes
+    private val previousDoorStates = mutableMapOf<String, Boolean>()
     
     private val _alerts = MutableStateFlow<List<Alert>>(emptyList())
     val alerts: StateFlow<List<Alert>> = _alerts.asStateFlow()
@@ -107,6 +112,7 @@ class DashboardViewModel @Inject constructor(
                 }
                 SensorType.DOOR -> {
                     logSensorValue("Door", sensor)
+                    checkDoorStateChange(sensor)
                 }
                 SensorType.VIBRATION -> {
                     logSensorValue("Vibration", sensor)
@@ -121,6 +127,34 @@ class DashboardViewModel @Inject constructor(
 
     private fun logSensorValue(sensorType: String, sensor: SensorData) {
         Log.d(TAG, "$sensorType sensor in ${sensor.location}: value=${sensor.value}")
+    }
+    
+    private fun checkDoorStateChange(sensor: SensorData) {
+        val sensorId = sensor.id
+        val isCurrentlyOpen = sensor.value > 0 // Door is open when value > 0
+        val wasOpen = previousDoorStates[sensorId] ?: false
+        
+        // Check if door state has changed
+        if (isCurrentlyOpen != wasOpen) {
+            // Update the previous state
+            previousDoorStates[sensorId] = isCurrentlyOpen
+            
+            // Log the access event
+            viewModelScope.launch {
+                try {
+                    accessLogRepository.logDoorAccess(
+                        sensorId = sensorId,
+                        doorLocation = sensor.location,
+                        isOpening = isCurrentlyOpen,
+                        timestamp = sensor.timestamp
+                    )
+                    
+                    Log.d(TAG, "Door access logged: ${sensor.location} - ${if (isCurrentlyOpen) "Opened" else "Closed"}")
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to log door access for ${sensor.location}", e)
+                }
+            }
+        }
     }
 
     fun acknowledgeAlert(alertId: String) {
