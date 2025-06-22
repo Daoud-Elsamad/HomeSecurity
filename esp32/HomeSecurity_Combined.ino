@@ -13,12 +13,12 @@
 
 // ===== CONFIGURATION SETTINGS =====
 // WiFi Configuration
-#define WIFI_SSID "Your_WiFi_SSID"  // CHANGE THIS TO YOUR WIFI NAME
-#define WIFI_PASSWORD "Your_WiFi_Password"  // CHANGE THIS TO YOUR WIFI PASSWORD
+#define WIFI_SSID "Haxpa"  // CHANGE THIS TO YOUR WIFI NAME
+#define WIFI_PASSWORD "Hayan123"  // CHANGE THIS TO YOUR WIFI PASSWORD
 
 // Firebase Configuration
-#define FIREBASE_HOST "your-firebase-project-url"  // Do not include https:// prefix
-#define FIREBASE_AUTH "Your_Firebase_API_Key"  // Project API key
+#define FIREBASE_HOST "home-security-55ca9-default-rtdb.europe-west1.firebasedatabase.app"  // Do not include https:// prefix
+#define FIREBASE_AUTH "AIzaSyBEH0sh8PmjBFf5e0F1IOKtziYeCJwSkls"  // Project API key
 
 
 // NTP Server for time synchronization

@@ -13,8 +13,3 @@
 .externalNativeBuild
 .cxx
 local.properties
-
-# Sensitive configuration files
-app/google-services.json
-esp32/config.h
-
