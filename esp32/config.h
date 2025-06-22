@@ -6,8 +6,8 @@
 #define WIFI_PASSWORD "Your_WiFi_Password"  // CHANGE THIS TO YOUR WIFI PASSWORD
 
 // Firebase Configuration
-#define FIREBASE_HOST "https://home-security-55ca9-default-rtdb.europe-west1.firebasedatabase.app"
-#define FIREBASE_AUTH "AIzaSyBEH0sh8PmjBFf5e0F1IOKtziYeCJwSkls"
+#define FIREBASE_HOST "your-firebase-project-url"
+#define FIREBASE_AUTH "Your_Firebase_API_Key"
 
 // NTP Server for time synchronization
 #define NTP_SERVER "pool.ntp.org"
